@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       .bk-image {
-        background-image: url("/images/background.jpg");
+        background-image: url("images/background.jpg");
         background-size: 1340px 750px;
       }
     </style>
     <title>Martial Arts Simulator</title>
   </head>
   <body class="bk-image">
-    <canvas id="canvas" height="500px" , width="500px"></canvas>
+    <canvas id="canvas" height="500px" width="500px"></canvas>
     <button id="kick">Kick</button>
     <button id="punch">Punch</button>
     <button id="forward">Forward</button>
