@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       .bk-image {
-        background-image: url("images/background.jpg");
+        background-image: url("/images/background.jpg");
         background-size: 1340px 750px;
       }
     </style>
@@ -38,7 +38,7 @@
       };
 
       let imagePath = (frameNumber, animation) => {
-        return "images/" + animation + "/" + frameNumber + ".png";
+        return "/images/" + animation + "/" + frameNumber + ".png";
       };
 
       let loadImages = (callback) => {
