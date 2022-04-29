@@ -1,37 +1,137 @@
-## Welcome to GitHub Pages
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .bk-image {
+        background-image: url("images/background.jpg");
+        background-size: 1340px 750px;
+      }
+    </style>
+    <title>Martial Arts Simulator</title>
+  </head>
+  <body class="bk-image">
+    <canvas id="canvas" height="500px" , width="500px"></canvas>
+    <button id="kick">Kick</button>
+    <button id="punch">Punch</button>
+    <button id="forward">Forward</button>
+    <button id="backward">Backward</button>
+    <button id="block">Block</button>
+    <script>
+      let canvas = document.getElementById("canvas");
+      let ctx = canvas.getContext("2d");
 
-You can use the [editor on GitHub](https://github.com/Siddhesh-232/siddhesh-232.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+      let frames = {
+        idle: [1, 2, 3, 4, 5, 6, 7, 8],
+        kick: [1, 2, 3, 4, 5, 6, 7],
+        punch: [1, 2, 3, 4, 5, 6, 7],
+        backward: [1, 2, 3, 4, 5, 6],
+        forward: [1, 2, 3, 4, 5, 6],
+        block: [1, 2, 3, 4, 5, 6],
+      };
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+      let loadImage = (src, callback) => {
+        let img = document.createElement("img");
+        img.onload = () => callback(img);
+        img.src = src;
+      };
 
-### Markdown
+      let imagePath = (frameNumber, animation) => {
+        return "images/" + animation + "/" + frameNumber + ".png";
+      };
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+      let loadImages = (callback) => {
+        let images = {
+          idle: [],
+          kick: [],
+          punch: [],
+          backward: [],
+          forward: [],
+          block: [],
+        };
+        let imagesToLoad = 0;
+        let action = Object.keys(images);
+        action.forEach((animation) => {
+          let animationFrames = frames[animation];
+          console.log(animationFrames);
 
-```markdown
-Syntax highlighted code block
+          imagesToLoad = imagesToLoad + animationFrames.length;
 
-# Header 1
-## Header 2
-### Header 3
+          animationFrames.forEach((frameNumber) => {
+            let path = imagePath(frameNumber, animation);
 
-- Bulleted
-- List
+            loadImage(path, (image) => {
+              imagesToLoad = imagesToLoad - 1;
+              images[animation][frameNumber - 1] = image;
+              if (imagesToLoad === 0) callback(images);
+            });
+          });
+        });
+      };
 
-1. Numbered
-2. List
+      let animate = (ctx, images, animation, callback) => {
+        images[animation].forEach((image, index) => {
+          setTimeout(() => {
+            ctx.clearRect(0, 0, 500, 500);
+            ctx.drawImage(image, 0, 0, canvas.height, canvas.width);
+          }, index * 100);
+        });
+        setTimeout(callback, images[animation].length * 100);
+      };
 
-**Bold** and _Italic_ and `Code` text
+      loadImages((images) => {
+        let queuedAnimation = [];
 
-[Link](url) and ![Image](src)
-```
+        let aux = () => {
+          let selectedAnimation;
+          if (queuedAnimation.length !== 0) {
+            selectedAnimation = queuedAnimation.shift();
+          } else {
+            selectedAnimation = "idle";
+          }
+          animate(ctx, images, selectedAnimation, aux);
+        };
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+        document.getElementById("kick").onclick = () => {
+          queuedAnimation.push("kick");
+        };
 
-### Jekyll Themes
+        document.getElementById("punch").onclick = () => {
+          queuedAnimation.push("punch");
+        };
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Siddhesh-232/siddhesh-232.github.io/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+        document.getElementById("forward").onclick = () => {
+          queuedAnimation.push("forward");
+        };
 
-### Support or Contact
+        document.getElementById("backward").onclick = () => {
+          queuedAnimation.push("backward");
+        };
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+        document.getElementById("block").onclick = () => {
+          queuedAnimation.push("block");
+        };
+
+        document.addEventListener("keyup", (event) => {
+          const key = event.key;
+
+          if (key === "ArrowUp") {
+            queuedAnimation.push("kick");
+          } else if (key === "ArrowDown") {
+            queuedAnimation.push("punch");
+          } else if (key === "ArrowRight") {
+            queuedAnimation.push("forward");
+          } else if (key === "ArrowLeft") {
+            queuedAnimation.push("backward");
+          } else if (key === " ") {
+            queuedAnimation.push("block");
+          }
+        });
+
+        aux();
+      });
+    </script>
+  </body>
+</html>
