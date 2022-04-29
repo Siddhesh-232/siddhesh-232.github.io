@@ -31,7 +31,7 @@
         block: [1, 2, 3, 4, 5, 6],
       };
 
-      let loadImage = (src, callback) => {
+      let ldImage = (src, callback) => {
         let img = document.createElement("img");
         img.onload = () => callback(img);
         img.src = src;
@@ -41,7 +41,7 @@
         return "images/" + animation + "/" + frameNumber + ".png";
       };
 
-      let loadImages = (callback) => {
+      let ldImages = (callback) => {
         let images = {
           idle: [],
           kick: [],
@@ -61,7 +61,7 @@
           animationFrames.forEach((frameNumber) => {
             let path = imagePath(frameNumber, animation);
 
-            loadImage(path, (image) => {
+            ldImage(path, (image) => {
               imagesToLoad = imagesToLoad - 1;
               images[animation][frameNumber - 1] = image;
               if (imagesToLoad === 0) callback(images);
@@ -80,7 +80,7 @@
         setTimeout(callback, images[animation].length * 100);
       };
 
-      loadImages((images) => {
+      ldImages((images) => {
         let queuedAnimation = [];
 
         let aux = () => {
