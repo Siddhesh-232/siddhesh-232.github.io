@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,6 +10,7 @@
         background-size: 1340px 750px;
       }
     </style>
+    <link rel="stylesheet" href="O:\W-101\martialarts\martialarts.css" />
     <title>Martial Arts Simulator</title>
   </head>
   <body class="bk-image">
