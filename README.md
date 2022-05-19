@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -13,7 +13,7 @@
     <title>Martial Arts Simulator</title>
   </head>
   <body class="bk-image">
-    <canvas id="canvas" height="500px" , width="500px"></canvas>
+    <canvas id="canvas" , height="500px" , width="500px"></canvas>
     <button id="kick">Kick</button>
     <button id="punch">Punch</button>
     <button id="forward">Forward</button>
